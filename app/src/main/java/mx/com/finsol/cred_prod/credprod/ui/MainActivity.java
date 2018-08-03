@@ -2,6 +2,8 @@ package mx.com.finsol.cred_prod.credprod.ui;
 
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
@@ -28,6 +30,11 @@ ClientTelephoneFragment.OnFragmentInteractionListener,ClientAdditionalDataFragme
     DrawerLayout drawer;
     NavigationView navigationView;
 
+    //Collapse ActionBar with ImageView Parallax Slide Animation
+    Toolbar toolbar;
+    AppBarLayout appBarLayout;
+    CollapsingToolbarLayout collapsingToolbarLayout;
+    boolean ExpandedActionBar = true;
     //fragments
     public android.app.FragmentManager fragmentManager;
     int idFm;
@@ -39,19 +46,36 @@ ClientTelephoneFragment.OnFragmentInteractionListener,ClientAdditionalDataFragme
         bindUI();
         setFragmentByDefault();
 
+        appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
+            @Override
+            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+                if(Math.abs(verticalOffset)>200){
+                    ExpandedActionBar=false;
+                    collapsingToolbarLayout.setTitle("ClipCodes Android");
+                    invalidateOptionsMenu();
+                }else{
+                    ExpandedActionBar = true;
+                    collapsingToolbarLayout.setTitle("Hello, Im ClipCodes");
+                    invalidateOptionsMenu();
+                }
+            }
+        });
+
     }
     private void bindUI(){
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        appBarLayout = (AppBarLayout) findViewById(R.id.appbar);
+        collapsingToolbarLayout=(CollapsingToolbarLayout)findViewById(R.id.ctoolbar);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        /*FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
-        });
+        });*/
 
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
