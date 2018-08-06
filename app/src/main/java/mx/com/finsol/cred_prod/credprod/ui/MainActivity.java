@@ -6,8 +6,12 @@ import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.design.widget.SubtitleCollapsingToolbarLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.RelativeSizeSpan;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -17,6 +21,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 import mx.com.finsol.cred_prod.credprod.R;
 import mx.com.finsol.cred_prod.credprod.ui.fragments.ClientAdditionalDataFragment;
@@ -33,7 +38,8 @@ ClientTelephoneFragment.OnFragmentInteractionListener,ClientAdditionalDataFragme
     //Collapse ActionBar with ImageView Parallax Slide Animation
     Toolbar toolbar;
     AppBarLayout appBarLayout;
-    CollapsingToolbarLayout collapsingToolbarLayout;
+    //CollapsingToolbarLayout collapsingToolbarLayout;
+    SubtitleCollapsingToolbarLayout collapsingToolbarLayout;
     boolean ExpandedActionBar = true;
     //fragments
     public android.app.FragmentManager fragmentManager;
@@ -46,16 +52,35 @@ ClientTelephoneFragment.OnFragmentInteractionListener,ClientAdditionalDataFragme
         bindUI();
         setFragmentByDefault();
 
+
         appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
             @Override
             public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
                 if(Math.abs(verticalOffset)>200){
+                    /*
+                    * TextView textView = (TextView) view.findViewById(R.id.textview);
+                      SpannableString content = new SpannableString("Content");
+                      content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
+                      textView.setText(content)*/
+                    //span.setSpan(new RelativeSizeSpan(0.8f), start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                    //TextView textView = (TextView) findViewById(R.id.textview_nombre_asesor);
+                    //SpannableString content = new SpannableString(textView.getText().toString());
+                    //content.setSpan(new RelativeSizeSpan(0.2f), 0, 0, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
                     ExpandedActionBar=false;
-                    collapsingToolbarLayout.setTitle("ClipCodes Android");
+                   /* toolbar.setTitle("Marco Antonio Lopez Perez");
+                    toolbar.setSubtitle("1234567890-Asesor de Credito");
+                    setSupportActionBar(toolbar);*/
+                    collapsingToolbarLayout.setTitle("Marco Antonio Lopez Perez");
+                    collapsingToolbarLayout.setSubtitle("1234567890-Asesor de Credito");
+
+
                     invalidateOptionsMenu();
                 }else{
                     ExpandedActionBar = true;
-                    collapsingToolbarLayout.setTitle("Hello, Im ClipCodes");
+                    collapsingToolbarLayout.setTitle("");//Marco Antonio Lopez Perez\n"+"1234567890-Asesor de Credito
+                    collapsingToolbarLayout.setSubtitle("");
+
                     invalidateOptionsMenu();
                 }
             }
@@ -64,7 +89,7 @@ ClientTelephoneFragment.OnFragmentInteractionListener,ClientAdditionalDataFragme
     }
     private void bindUI(){
         appBarLayout = (AppBarLayout) findViewById(R.id.appbar);
-        collapsingToolbarLayout=(CollapsingToolbarLayout)findViewById(R.id.ctoolbar);
+        collapsingToolbarLayout=(SubtitleCollapsingToolbarLayout)findViewById(R.id.ctoolbar);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
